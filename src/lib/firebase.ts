@@ -4,13 +4,13 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCmKXv8w3KMqfLbP3JI1LU_1m8dWiCkdr0",
-  authDomain: "NovaWatchhize.firebaseapp.com",
-  projectId: "NovaWatchhize",
-  storageBucket: "NovaWatchhize.firebasestorage.app",
-  messagingSenderId: "998909432848",
-  appId: "1:998909432848:web:09757b5295339ffe0ea695",
-  measurementId: "G-VK283ZECF4",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyCmKXv8w3KMqfLbP3JI1LU_1m8dWiCkdr0",
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "NovaWatchhize.firebaseapp.com",
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "NovaWatchhize",
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "NovaWatchhize.firebasestorage.app",
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "998909432848",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:998909432848:web:09757b5295339ffe0ea695",
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-VK283ZECF4",
 };
 
 const app = initializeApp(firebaseConfig);
