@@ -102,15 +102,21 @@ export function Navbar() {
               Best Times
             </StyledNavLink>
             {role === "admin" && (
-              <NavLink
-                to="/admin"
-                className={({ isActive }) =>
-                  `${navLinkClass} ${isActive ? navLinkActiveClass : ""} flex items-center gap-1.5`
-                }
-              >
-                <Settings className="w-4 h-4" />
-                Admin
-              </NavLink>
+              <>
+                <StyledNavLink
+                  to="/admin/upload"
+                  className={navLinkClass}
+                  activeClassName={navLinkActiveClass}
+                >
+                  Upload Video
+                </StyledNavLink>
+                <StyledNavLink
+                  to="/admin"
+                  className={navLinkClass}
+                >
+                  Admin
+                </StyledNavLink>
+              </>
             )}
           </div>
 
@@ -309,19 +315,29 @@ export function Navbar() {
                   Best Times
                 </StyledNavLink>
                 {role === "admin" && (
-                  <NavLink
-                    to="/admin"
-                    className={({ isActive }) =>
-                      `px-4 py-3 rounded-xl text-sm font-medium flex items-center gap-2 w-full transition-colors ${isActive
-                        ? "bg-secondary text-foreground"
-                        : "text-muted-foreground hover:text-foreground hover:bg-secondary"
-                      }`
-                    }
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <Settings className="w-4 h-4" />
-                    Admin
-                  </NavLink>
+                  <>
+                    <StyledNavLink
+                      to="/admin/upload"
+                      className="px-4 py-3 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors w-full block"
+                      activeClassName="bg-secondary text-foreground"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      Upload Video
+                    </StyledNavLink>
+                    <NavLink
+                      to="/admin"
+                      className={({ isActive }) =>
+                        `px-4 py-3 rounded-xl text-sm font-medium flex items-center gap-2 w-full transition-colors ${isActive
+                          ? "bg-secondary text-foreground"
+                          : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+                        }`
+                      }
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <Settings className="w-4 h-4" />
+                      Admin
+                    </NavLink>
+                  </>
                 )}
               </div>
             </motion.div>

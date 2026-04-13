@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LayoutDashboard, MapPin, Video, Upload, BarChart3, Settings, ChevronLeft, Globe, Users, Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useLocation, useNavigate } from 'react-router-dom';
 import AdminDashboard from './admin/AdminDashboard';
 import AdminLocations from './admin/AdminLocations';
 import AdminCameras from './admin/AdminCameras';
@@ -25,13 +26,24 @@ const navItems: { id: AdminPage; label: string; icon: typeof LayoutDashboard }[]
 ];
 
 export default function AdminPanel() {
-  const [activePage, setActivePage] = useState<AdminPage>('dashboard');
+  const location = useLocation();
+  const pathParts = location.pathname.split('/');
+  const defaultPage = (pathParts.length > 2 && pathParts[2]) ? (pathParts[2] as AdminPage) : 'dashboard';
+  const [activePage, setActivePage] = useState<AdminPage>(defaultPage);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
+  // Keep URL in sync with active page changes
+  const handleNavClick = (id: AdminPage) => {
+    setActivePage(id);
+    navigate(`/admin/${id}`);
+    setMobileMenuOpen(false);
+  };
 
   const renderPage = () => {
     switch (activePage) {
-      case 'dashboard': return <AdminDashboard onNavigate={setActivePage} />;
+      case 'dashboard': return <AdminDashboard onNavigate={handleNavClick} />;
       case 'locations': return <AdminLocations />;
       case 'cameras': return <AdminCameras />;
       case 'live-cctv': return <AdminLiveCCTV />;
@@ -39,13 +51,8 @@ export default function AdminPanel() {
       case 'analytics': return <AdminAnalytics />;
       case 'users': return <AdminUsers />;
       case 'settings': return <AdminSettings />;
-      default: return <AdminDashboard onNavigate={setActivePage} />;
+      default: return <AdminDashboard onNavigate={handleNavClick} />;
     }
-  };
-
-  const handleNavClick = (id: AdminPage) => {
-    setActivePage(id);
-    setMobileMenuOpen(false);
   };
 
   return (
@@ -91,7 +98,7 @@ export default function AdminPanel() {
                   ? "bg-secondary text-foreground"
                   : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
               )}
-              onClick={() => setActivePage(item.id)}
+              onClick={() => handleNavClick(item.id)}
             >
               <item.icon className="w-5 h-5 flex-shrink-0" />
               {!sidebarCollapsed && <span>{item.label}</span>}
