@@ -48,8 +48,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       try {
         const userRef = doc(db, "users", firebaseUser.uid);
         const userSnap = await getDoc(userRef);
-        const isAdminEmail = firebaseUser.email === "gvrakshithaofficial@gmail.com";
-        
+        const userEmail = firebaseUser.email?.toLowerCase().trim() || "";
+        const isAdminEmail = userEmail === "gvrakshithaofficial@gmail.com";
         if (userSnap.exists()) {
           const data = userSnap.data() as UserProfile;
           // Determine role, granting admin to the hardcoded email no matter what
