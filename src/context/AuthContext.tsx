@@ -5,6 +5,8 @@ import {
   signInWithRedirect,
   getRedirectResult,
   signOut as firebaseSignOut,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db, GoogleAuthProvider } from "@/lib/firebase";
@@ -23,6 +25,8 @@ interface AuthContextType {
   role: UserRole | null;
   loading: boolean;
   signInWithGoogle: () => Promise<void>;
+  signInWithEmail: (email: string, pass: string) => Promise<void>;
+  signUpWithEmail: (email: string, pass: string) => Promise<void>;
   signOut: () => Promise<void>;
 }
 
@@ -86,6 +90,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Page redirects to Google; after sign-in, user is redirected back and getRedirectResult runs
   };
 
+  const signInWithEmail = async (email: string, pass: string) => {
+    await signInWithEmailAndPassword(auth, email, pass);
+  };
+
+  const signUpWithEmail = async (email: string, pass: string) => {
+    await createUserWithEmailAndPassword(auth, email, pass);
+  };
+
   const signOut = async () => {
     await firebaseSignOut(auth);
     setRole(null);
@@ -98,6 +110,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         role,
         loading,
         signInWithGoogle,
+        signInWithEmail,
+        signUpWithEmail,
         signOut,
       }}
     >
@@ -111,6 +125,8 @@ const defaultAuthState: AuthContextType = {
   role: null,
   loading: true,
   signInWithGoogle: () => Promise.resolve(),
+  signInWithEmail: () => Promise.resolve(),
+  signUpWithEmail: () => Promise.resolve(),
   signOut: () => Promise.resolve(),
 };
 

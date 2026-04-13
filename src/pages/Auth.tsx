@@ -5,7 +5,7 @@ import { useAuth } from '@/context/AuthContext';
 
 const Auth: React.FC = () => {
   const navigate = useNavigate();
-  const { signInWithGoogle } = useAuth();
+  const { signInWithGoogle, signInWithEmail, signUpWithEmail } = useAuth();
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
@@ -44,17 +44,16 @@ const Auth: React.FC = () => {
     }
 
     try {
-      // NOTE: Firebase email/password auth is not fully set up in AuthContext yet.
-      // This is simulated success per the component template provided.
-      console.log('Authenticating with:', { email, password, mode: authMode });
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      if (authMode === 'login') {
+        await signInWithEmail(email, password);
+      } else {
+        await signUpWithEmail(email, password);
+      }
       
       // On success
       navigate('/admin');
-    } catch (err) {
-      setError('Authentication failed. Please try again.');
+    } catch (err: any) {
+      setError(err.message || 'Authentication failed. Please try again.');
     } finally {
       setLoading(false);
     }
