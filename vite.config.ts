@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: true,
     port: 8081,
-    strictPort: true,
+    strictPort: false,
     headers: {
       "Cross-Origin-Opener-Policy": "unsafe-none",
       "Cross-Origin-Embedder-Policy": "unsafe-none",
