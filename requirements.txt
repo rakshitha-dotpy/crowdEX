@@ -1,8 +1,0 @@
-fastapi
-uvicorn
-ultralytics
-opencv-python-headless
-python-multipart
-websockets
-numpy
-yt-dlp
