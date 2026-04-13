@@ -74,7 +74,7 @@ export function Navbar() {
             <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
               <MapPin className="w-4 h-4 text-primary-foreground" />
             </div>
-            <span className="font-semibold text-lg tracking-tight">NovaWatch</span>
+            <span className="font-semibold text-lg tracking-tight">crowdeX</span>
           </div>
 
           {/* Center Navigation */}

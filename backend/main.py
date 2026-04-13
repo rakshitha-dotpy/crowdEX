@@ -6,7 +6,7 @@ import asyncio
 from services.video_processor import video_processor
 from fastapi import WebSocket, WebSocketDisconnect
 
-app = FastAPI(title="NovaWatch Backend", version="1.0.0")
+app = FastAPI(title="crowdeX Backend", version="1.0.0")
 
 # CORS
 app.add_middleware(
@@ -25,7 +25,7 @@ app.include_router(rtsp_router)  # RTSP/Public CCTV camera router
 
 @app.get("/")
 def read_root():
-    return {"message": "NovaWatch Backend API is running"}
+    return {"message": "crowdeX Backend API is running"}
 
 @app.get("/api/health")
 def health_check():

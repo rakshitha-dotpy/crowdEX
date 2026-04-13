@@ -78,7 +78,7 @@ const Auth: React.FC = () => {
             <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg flex items-center justify-center">
               <MapPin size={24} className="text-white" />
             </div>
-            <h1 className="text-2xl font-bold tracking-tight">NovaWatch</h1>
+            <h1 className="text-2xl font-bold tracking-tight">crowdeX</h1>
           </div>
 
           {/* Main message */}
@@ -135,8 +135,8 @@ const Auth: React.FC = () => {
             </h3>
             <p className="text-slate-600">
               {authMode === 'login'
-                ? 'Sign in to your NovaWatch account'
-                : 'Create a new NovaWatch account'}
+                ? 'Sign in to your crowdeX account'
+                : 'Create a new crowdeX account'}
             </p>
           </div>
 
