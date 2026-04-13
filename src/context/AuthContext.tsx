@@ -48,12 +48,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       try {
         const userRef = doc(db, "users", firebaseUser.uid);
         const userSnap = await getDoc(userRef);
+        const isAdminEmail = firebaseUser.email === "gvrakshithaofficial@gmail.com";
+        
         if (userSnap.exists()) {
-          // Temporarily force 'admin' role for testing
-          setRole("admin"); 
+          const data = userSnap.data() as UserProfile;
+          // Determine role, granting admin to the hardcoded email no matter what
+          const calculatedRole = isAdminEmail ? "admin" : (data.role === "admin" ? "admin" : "user");
+          setRole(calculatedRole);
         } else {
+          const calculatedRole = isAdminEmail ? "admin" : "user";
           const newUserData: Record<string, unknown> = {
-            role: "admin", // Temporarily force new users to 'admin'
+            role: calculatedRole,
             createdAt: serverTimestamp(),
           };
           if (firebaseUser.email != null && firebaseUser.email !== "") {
@@ -63,11 +68,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             newUserData.displayName = firebaseUser.displayName;
           }
           await setDoc(userRef, newUserData);
-          setRole("admin");
+          setRole(calculatedRole);
         }
       } catch (err) {
         console.error("Auth: failed to create or read user doc", err);
-        setRole("admin"); // Force admin on error too
+        setRole("user");
       } finally {
         setLoading(false);
       }
