@@ -1,0 +1,5 @@
+backend/
+api/
+run_backend.bat
+requirements.txt
+*.py
